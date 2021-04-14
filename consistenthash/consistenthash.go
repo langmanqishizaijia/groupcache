@@ -18,6 +18,7 @@ limitations under the License.
 package consistenthash
 
 import (
+	"fmt"
 	"hash/crc32"
 	"sort"
 	"strconv"
@@ -54,6 +55,7 @@ func (m *Map) Add(keys ...string) {
 	for _, key := range keys {
 		for i := 0; i < m.replicas; i++ {
 			hash := int(m.hash([]byte(strconv.Itoa(i) + key)))
+			fmt.Printf("i=%v, key=%v, hash=%v\n",i,key,hash)
 			m.keys = append(m.keys, hash)
 			m.hashMap[hash] = key
 		}
